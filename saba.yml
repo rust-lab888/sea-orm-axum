@@ -1,0 +1,40 @@
+lang: rust
+arch: ddd
+spec:
+- location: domain
+  upstream:
+    - name: model
+      description: このディレクトリはsea-orm-cliによって管理される
+      codefile:
+        - name: character
+
+    - name: repository
+      codefile:
+        - name: character
+
+- location: infrastructure
+  upstream:
+    - name: repository
+      codefile:
+        - name: character
+
+
+- location: usecase
+  codefile:
+    - name: character
+
+
+- location: presentation
+  codefile:
+    - name: app
+  upstream:
+    - name: http
+      upstream:
+        - name: handler
+          codefile:
+            - name: character
+
+
+# - location: di
+#   codefile:
+#     - name: container
