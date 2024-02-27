@@ -11,7 +11,7 @@ where
     Ok(characters)
 }
 
-pub async fn create<R>(repo: &R, name: &str) -> anyhow::Result<character::ActiveModel>
+pub async fn create<R>(repo: &R, name: &str) -> anyhow::Result<character::Model>
 where
     R: CharacterRepository,
 {

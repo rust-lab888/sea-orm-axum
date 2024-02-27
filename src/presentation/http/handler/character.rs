@@ -4,6 +4,7 @@ use crate::presentation::app;
 use serde::{Serialize, Deserialize};
 use axum::{
     extract::{State},
+    response::IntoResponse,
     Json,
     http::StatusCode,
 };
@@ -28,10 +29,11 @@ struct CharacterCreateSchema {
 pub async fn create_character(
     state: State<app::State>,
     Json(body): Json<CharacterCreateSchema>,
-) -> Result<Json<character::ActiveModel>, StatusCode> {
+) -> Result<Json<character::Model>, StatusCode> {
     let character = usecase::character::create(&state.conn, &body.name)
         .await
         .expect("fail");
+
 
     Ok(Json(character))
 }
