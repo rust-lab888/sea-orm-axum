@@ -55,6 +55,8 @@ async fn main() -> anyhow::Result<()> {
         .route("/character", post(create_character))
         .with_state(state);
 
-    println!("Hello, world!");
+    let listener = tokio::net::TcpListener::bind("localhost:4000").await.unwrap();
+    axum::serve(listener, app).await?;
+
     Ok(())
 }
