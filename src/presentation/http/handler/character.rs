@@ -3,8 +3,7 @@ use crate::usecase;
 use crate::presentation::app;
 use serde::{Serialize, Deserialize};
 use axum::{
-    extract::{State},
-    response::IntoResponse,
+    extract::State,
     Json,
     http::StatusCode,
 };
@@ -22,8 +21,8 @@ pub async fn get_characters(
 
 
 #[derive(Serialize, Deserialize, Debug)]
-struct CharacterCreateSchema {
-    name: String,
+pub struct CharacterCreateSchema {
+    pub name: String,
 }
 
 pub async fn create_character(
