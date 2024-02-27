@@ -27,7 +27,12 @@ use sea_orm::Database;
 use std::env;
 use migration::{Migrator, MigratorTrait};
 use presentation::app;
-use presentation::http::handler::character::{ create_character, get_characters };
+use presentation::http::handler::character::{
+    create_character,
+    get_characters,
+    update_character,
+    delete_character,
+};
 use axum::{
     Router,
     routing::{
@@ -52,7 +57,12 @@ async fn main() -> anyhow::Result<()> {
 
     let app = Router::new()
         .route("/characters", get(get_characters))
-        .route("/character", post(create_character))
+        .route(
+            "/character",
+            post(create_character)
+            .put(update_character)
+            .delete(delete_character),
+        )
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("localhost:4000").await.unwrap();
