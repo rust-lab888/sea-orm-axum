@@ -37,7 +37,7 @@ use axum::{
     Router,
     routing::{
         get,
-        post,
+        patch,
     }
 };
 
@@ -56,13 +56,8 @@ async fn main() -> anyhow::Result<()> {
     let state = app::State{ conn };
 
     let app = Router::new()
-        .route("/characters", get(get_characters))
-        .route(
-            "/character",
-            post(create_character)
-            .put(update_character)
-            .delete(delete_character),
-        )
+        .route("/characters", get(get_characters).post(create_character))
+        .route("/characters/:id", patch(update_character).delete(delete_character))
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("localhost:4000").await.unwrap();
